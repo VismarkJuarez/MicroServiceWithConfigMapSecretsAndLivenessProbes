@@ -60,18 +60,59 @@ curl -X PATCH "http://localhost:8080/request-details" -H "Content-Type: applicat
 ```
 
 OPTIONS Request
+Purpose: The OPTIONS method is used to describe the communication options for the target resource. It allows the client to determine the capabilities of the server or the resource.
+Behavior: When a client sends an OPTIONS request, the server responds with the allowed HTTP methods for the specified resource. This can include methods like GET, POST, PUT, DELETE, etc.
+Use Case: It is often used in CORS (Cross-Origin Resource Sharing) preflight requests to check which HTTP methods and headers are allowed when making cross-origin requests.
+
+Example: An OPTIONS request to /request-details might return:
+
+```json
+HTTP/1.1 200 OK
+Allow: GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD, TRACE
+```
 ```bash
 curl -X OPTIONS "http://localhost:8080/request-details" -H "Custom-Header: customValue"
 
 ```
 
 HEAD Request
+
+Purpose: The HEAD method is used to retrieve the headers of a resource without fetching the actual body. It is similar to a GET request but does not return the response body.
+Behavior: When a client sends a HEAD request, the server responds with the headers that would be sent if the resource were requested with a GET method.
+Use Case: It is useful for checking the metadata of a resource, such as content type, content length, and last modified date, without downloading the resource itself.
+Example: A HEAD request to /request-details might return:
+
+```json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 1234
+```
+
 ```bash
 curl -I "http://localhost:8080/request-details" -H "Custom-Header: customValue"
 
 ```
 
+
 TRACE Request
+
+Purpose: The TRACE method is used for diagnostic purposes. It echoes back the received request so that the client can see what changes or additions have been made by intermediate servers.
+Behavior: When a client sends a TRACE request, the server responds with the exact request message it received, including headers and body. This helps in debugging and understanding the path taken by the request.
+Use Case: It is useful for debugging and testing the network path and intermediaries between the client and server.
+Example: A TRACE request to /request-details might return:
+
+```json
+HTTP/1.1 200 OK
+Content-Type: message/http
+Content-Length: 1234
+
+TRACE /request-details HTTP/1.1
+Host: localhost:8080
+Custom-Header: customValue
+
+```
+
 ```bash
 curl -X TRACE "http://localhost:8080/request-details" -H "Custom-Header: customValue"
 
