@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-pod
+spec:
+  containers:
+    - name: debug-container
+      image: curlimages/curl
+      command: ["sleep", "3600"]
+
+# This is just a throw-away debug Pod definition.  The container just sleeps and allows us to exec into it.

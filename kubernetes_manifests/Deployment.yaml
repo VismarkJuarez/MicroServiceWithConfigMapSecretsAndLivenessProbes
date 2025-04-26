@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+        - name: my-app-container
+          image: vismarkjuarez1994/kubernetes-configmap-and-secret:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: application.firstName
+              valueFrom:
+                configMapKeyRef:
+                  name: my-config
+                  key: application.firstName
+            - name: application.lastName
+              valueFrom:
+                configMapKeyRef:
+                  name: my-config
+                  key: application.lastName
+            - name: application.age
+              valueFrom:
+                configMapKeyRef:
+                  name: my-config
+                  key: application.age
+            - name: VISMARKS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: vismarksSecret
+#          livenessProbe:
+#            httpGet:
+#              path: /
+#              port: 8080
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
+#          readinessProbe:
+#            httpGet:
+#              path: /
+#              port: 8080
+#            initialDelaySeconds: 30
+#            periodSeconds: 10
