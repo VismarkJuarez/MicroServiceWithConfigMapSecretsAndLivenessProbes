@@ -1,4 +1,54 @@
 ## Microservice
+
+
+## Building and Running the Container:
+- Build a new image version:
+  ```bash
+  docker build -t demo-app .
+  ```
+
+- Run the image (for the first time)
+  ```bash
+  docker run -p 8080:8080 \
+    --name my-running-app \
+    -e FILE_PATH_ENVIRONMENT_VARIABLE=/in/container/file/path \
+    -e MY_ENVIRONMENT_VARIABLE=vismark-file.config \
+    -e application.firstName=Vismark \
+    -v /Users/vismarkjuarez/documents:/in/container/file/path:ro \ # this line tells Docker to "let the container access all the contents in my computer's "/Users/vismarkjuarez/documents" directory. The container can access the directory via it's own "/in/container/file/path" OS directory, but its access should be read-only (ro)
+    demo-app:latest
+  ```
+
+  If you have already previously run the image, you need to do `docker start` because `docker run` will create a new container:
+  ```bash
+  docker image ls
+  IMAGE                                                                                                 ID             DISK USAGE   CONTENT SIZE   EXTRA
+  demo-app:latest                                                                                       d83dba7aa690        712MB          218MB    U
+  gcr.io/k8s-minikube/kicbase:v0.0.50                                                                   ffefe6978189       1.88GB          507MB
+  gcr.io/k8s-minikube/kicbase@sha256:eb4fec00e8ad70adf8e6436f195cc429825ffb85f95afcdb5d8d9deb576f3e93   eb4fec00e8ad       1.88GB          507MB    U
+  ...
+  vismarkjuarez@Vismarks-MacBook-Air  % docker start -a my-running-app
+  ```
+
+  If you want to pass in new environment variables and configs, you actually need to delete the old container and re-create it with your new desired configs, as shwon below:
+  ```bash
+  # 1. Remove the existing container (stops it and clears the name)
+  docker rm -f my-running-app
+
+  # 2. Run a brand new container with your NEW values
+  docker run -p 8080:8080 \
+    --name my-running-app \
+    -e application.firstName=NewValue \
+    -e NEW_ENV_VAR=something_else \
+    -v /Users/vismarkjuarez/documents:/new/container/path \
+    demo-app:latest
+  ```
+
+- For viewing the application's dynamically-configured environment variables, and volume mount contents, execute the following curl call:
+  ```bash
+  curl localhost:8080/config
+  ```
+
+
 - For experimenting with the `RequestDetailsController`, you can use the following curl calls:
 
 GET Request

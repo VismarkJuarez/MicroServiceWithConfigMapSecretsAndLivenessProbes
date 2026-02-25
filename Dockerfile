@@ -1,4 +1,4 @@
-FROM openjdk:17
+FROM eclipse-temurin:17-jdk
 ADD target/DemoMicroservice-0.0.1-SNAPSHOT.jar DemoMicroservice.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "DemoMicroservice.jar"]
