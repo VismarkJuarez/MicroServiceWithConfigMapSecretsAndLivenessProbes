@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * This controller simply returns the value of the environment variable, and config values injected into their respective
+ * variables in the KubernetesResourcesService
+*/
 @RestController
 public class MainController {
 

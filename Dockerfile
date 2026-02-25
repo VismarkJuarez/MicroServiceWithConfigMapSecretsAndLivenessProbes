@@ -5,4 +5,3 @@ ENTRYPOINT ["java", "-jar", "MicroServiceWithConfigMapSecretsAndLivenessProbes.j
 # TODO:
 # - What happens when we provide environment variable values here?
 # - What if we COPY a configuration file, and that configuration file has dynamic variable placeholders? how do we pass those in?
-# - change the port, and see how the deployment/service/Pod definitions need to change

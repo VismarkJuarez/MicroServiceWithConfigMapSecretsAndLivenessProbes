@@ -9,29 +9,32 @@ import java.util.Map;
 @Service
 public class KubernetesResourcesService {
 
-    @Value("${application.firstName}") // Value is expected from the application.properties file. On Kubernetes, it'll be read in from a ConfigMap
-    private String firstName;
+    private final String firstName;
+    private final String lastName;
+    private final int age;
+    private final String myEnvironmentVariable;
 
-    @Value("${application.lastName}") // Value is expected from the application.properties file. On Kubernetes, it'll be read in from a ConfigMap
-    private String lastName;
-
-    @Value("${application.age}") // Value is expected from the application.properties file. On Kubernetes, it'll be read in from a ConfigMap
-    private int age;
-
-    @Value("${VISMARKS_SECRET}") // Value is expected to be an environment variable. On Kubernetes, this will be specified in a Secret
-    private String vismarksSecret;
-
-    public KubernetesResourcesService(){
-        // Default constructor. Without it, Spring cannot create a Bean.
+    // Spring automatically injects these parameters from your properties/env vars
+    // Default values for both the app config variables, and the environment variable
+    // have been specified.
+    public KubernetesResourcesService(
+            @Value("${application.firstName:John}") String firstName,
+            @Value("${application.lastName:Doe}") String lastName,
+            @Value("${application.age:30}") int age,
+            @Value("${MY_ENVIRONMENT_VARIABLE:default_environment_variable}") String myEnvironmentVariable) {
+        
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.myEnvironmentVariable = myEnvironmentVariable;
     }
 
-    public Map<String, String> retrieveConfigValuesAndSecret(){
+    public Map<String, String> retrieveConfigValuesAndSecret() {
         Map<String, String> configValuesAndSecret = new HashMap<>();
         configValuesAndSecret.put("[configuration property] firstName", firstName);
         configValuesAndSecret.put("[configuration property] lastName", lastName);
-        configValuesAndSecret.put("[configuration property] age", String.valueOf(age)); // converted to a String to keep things simple
-        configValuesAndSecret.put("[environment variable] vismarksSecret", vismarksSecret);
+        configValuesAndSecret.put("[configuration property] age", String.valueOf(age));
+        configValuesAndSecret.put("[environment variable] myEnvironmentVariable", myEnvironmentVariable);
         return configValuesAndSecret;
     }
-
 }

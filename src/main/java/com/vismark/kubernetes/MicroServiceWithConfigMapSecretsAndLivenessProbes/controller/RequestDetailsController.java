@@ -7,6 +7,14 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Map;
 
+/**
+ * This controller simply prints the request headers, query params and body of the incoming request,
+ * then, returns the same request details as the response payload. 
+ * 
+ * The intention with these endpoints is to serve as an echo API to verify infrastructure functionality
+ * on GCP, AWS, and Kubernetes.
+*/
+
 @RestController
 @RequestMapping("/request-details")
 public class RequestDetailsController {

@@ -13,7 +13,9 @@ curl -X POST "http://localhost:8080/request-details" -H "Content-Type: applicati
 
 ```
 
-PUT Request: The PUT method is used to update a resource or create a resource if it does not exist. It is typically used for full updates.
+PUT Request: 
+
+The PUT method is used to update a resource or create a resource if it does not exist. It is typically used for full updates.
 When you send a PUT request, you are sending a complete representation of the resource. The server will replace the existing resource with the new data provided in the request.
 PUT requests are idempotent, meaning that making the same PUT request multiple times will have the same effect as making it once. The resource will be updated to the same state each time.
 
@@ -41,11 +43,11 @@ curl -X DELETE "http://localhost:8080/request-details" -H "Accept: application/j
 ```
 
 PATCH Request
+
 Purpose: The PATCH method is used to apply partial modifications to a resource. It is typically used for partial updates.
 Behavior: When you send a PATCH request, you are sending only the changes you want to make to the resource. The server will update the resource with the provided data without affecting other parts of the resource.
 Idempotency: PATCH requests are not necessarily idempotent. Making the same PATCH request multiple times may result in different states if the changes depend on the current state of the resource.
 Example: If you want to update only the email of a user profile, a PATCH request might look like this:
-
 ```json
 {
   "email": "new.email@example.com"
@@ -60,6 +62,7 @@ curl -X PATCH "http://localhost:8080/request-details" -H "Content-Type: applicat
 ```
 
 OPTIONS Request
+
 Purpose: The OPTIONS method is used to describe the communication options for the target resource. It allows the client to determine the capabilities of the server or the resource.
 Behavior: When a client sends an OPTIONS request, the server responds with the allowed HTTP methods for the specified resource. This can include methods like GET, POST, PUT, DELETE, etc.
 Use Case: It is often used in CORS (Cross-Origin Resource Sharing) preflight requests to check which HTTP methods and headers are allowed when making cross-origin requests.
